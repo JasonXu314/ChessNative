@@ -10,8 +10,14 @@ const reducer = (state, action) => {
     switch (action.type)
     {
         case ('init'):
-            const board = new Array(8);
-            board.fill(new Array(8));
+            const board = [['R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R'],
+                            ['p', 'p', 'p', 'p', 'p', 'p', 'p', 'p'],
+                            ['', '', '', '', '', '', '', '', ],
+                            ['', '', '', '', '', '', '', '', ],
+                            ['', '', '', '', '', '', '', '', ],
+                            ['', '', '', '', '', '', '', '', ],
+                            ['p', 'p', 'p', 'p', 'p', 'p', 'p', 'p'],
+                            ['R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R']];
             return { ...state, board };
         case ('move'):
             return {};
@@ -30,7 +36,6 @@ const Context = (props) => {
 
     useEffect(() => {
         dispatch({ type: 'init' });
-        console.log(state.board);
     }, []);
 
     return (
