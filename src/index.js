@@ -10,14 +10,14 @@ const reducer = (state, action) => {
     switch (action.type)
     {
         case ('init'):
-            const board = [['R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R'],
-                            ['p', 'p', 'p', 'p', 'p', 'p', 'p', 'p'],
+            const board = [['Rb', 'Nb', 'Bb', 'Qb', 'Kb', 'Bb', 'Nb', 'Rb'],
+                            ['pb', 'pb', 'pb', 'pb', 'pb', 'pb', 'pb', 'pb'],
                             ['', '', '', '', '', '', '', '', ],
                             ['', '', '', '', '', '', '', '', ],
                             ['', '', '', '', '', '', '', '', ],
                             ['', '', '', '', '', '', '', '', ],
-                            ['p', 'p', 'p', 'p', 'p', 'p', 'p', 'p'],
-                            ['R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R']];
+                            ['pw', 'pw', 'pw', 'pw', 'pw', 'pw', 'pw', 'pw'],
+                            ['Rw', 'Nw', 'Bw', 'Qw', 'Kw', 'Bw', 'Nw', 'Rw']];
             return { ...state, board };
         case ('move'):
             return {};
