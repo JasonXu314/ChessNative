@@ -1,9 +1,13 @@
 .board
 {
-    
+    width: 544px;
+    height: 544px;
+    background-color: burlywood;
 }
 
 .row
 {
     position: absolute;
+    width: fit-content;
+    height: fit-content;
 }

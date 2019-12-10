@@ -3,7 +3,7 @@ import Piece from './Piece';
 
 import './Square.css';
 
-import GlobalContext from './index';
+import { DragContext } from './Board';
 
 const reducer = (state, action) => {
     switch (action.type)
@@ -21,14 +21,23 @@ const reducer = (state, action) => {
 
 const Square = (props) => {
     const [state, dispatch] = useReducer(reducer, { clicked: false, dragging: false, x: null, y: null, piece: props.piece.slice(0, 1), color: props.piece.slice(1, 2) });
-    const context = useContext(GlobalContext);
+    const context = useContext(DragContext);
 
-    return (
-        <div className = "square" style = {{ top: parseInt(props.y) * 75, left: parseInt(props.x) * 75, backgroundColor: state.clicked ? 'green' : null }}
-            onClick = {() => console.log(state.piece, state.color) & dispatch({ type: 'click' })} >
-            <Piece piece = {context.board[props.y][props.x]} />
-        </div>
-    );
+    if (props.piece === '')
+    {
+        return (
+            <div className = "square" style = {{ top: parseInt(props.y) * 68, left: parseInt(props.x) * 68 }} />
+        );
+    }
+    else
+    {
+        return (
+            <div className = "square" style = {{ top: parseInt(props.y) * 68, left: parseInt(props.x) * 68, backgroundColor: state.clicked ? '#408f32' : null }}
+                onMouseDown = {() => dispatch({ type: 'dragging' })} onClick = {() => dispatch({ type: 'click' })} >
+                <Piece piece = {props.piece} position = {state.dragging ? { x: context.mouseX, y: context.mouseY } : null} />
+            </div>
+        );
+    }
 };
 
 export default Square;
