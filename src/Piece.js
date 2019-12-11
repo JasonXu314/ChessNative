@@ -22,7 +22,7 @@ const Piece = (props) => {
     {
         return (
             <img alt = "Error" src = {pieceDict[props.piece]} onMouseUp = {(evt) => console.log(evt.target)} draggable = {false}
-                style = {props.position ? { position: 'absolute', left: props.position.x, top: props.position.y } : null} />
+                style = {props.position ? { position: 'fixed', left: props.position.x, top: props.position.y } : null} />
         );
     }
 };

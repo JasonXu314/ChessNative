@@ -1,8 +1,8 @@
 .square
 {
     position: absolute;
-    width: 64px;
-    height: 64px;
+    width: 60px;
+    height: 60px;
     border: 4px solid black;
     text-align: center;
     user-select: none;

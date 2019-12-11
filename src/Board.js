@@ -12,7 +12,7 @@ const Board = () => {
 
     return (
         <DragContext.Provider value = {state}>
-            <div className = "board" onMouseMove = {(evt) => dispatch({ type: 'mousemove', x: evt.pageX - 450, y: evt.pageY - 100 })}
+            <div className = "board" onMouseMove = {(evt) => dispatch({ type: 'mousemove', x: evt.pageX - 30, y: evt.pageY - 30 })}
                 onMouseDown = {() => dispatch({ type: 'dragging' })} onMouseUp = {() => dispatch({ type: 'undragging' })} >
                 {context.board.map((arr, i) => (
                     <span className = "row" key = {i}>

@@ -28,13 +28,13 @@ const Square = (props) => {
     if (props.piece === '')
     {
         return (
-            <div className = "square" style = {{ top: parseInt(props.y) * 68, left: parseInt(props.x) * 68 }} />
+            <div className = "square" style = {{ top: parseInt(props.y) * 64, left: parseInt(props.x) * 64 }} />
         );
     }
     else
     {
         return (
-            <div className = "square" style = {{ top: parseInt(props.y) * 68, left: parseInt(props.x) * 68, backgroundColor: state.clicked ? '#408f32' : null }}
+            <div className = "square" style = {{ top: parseInt(props.y) * 64, left: parseInt(props.x) * 64, backgroundColor: state.clicked ? '#408f32' : null }}
                 onMouseDown = {() => dispatch({ type: 'dragging' })} onMouseUp = {() => dispatch({ type: 'undragging' })} onClick = {() => dispatch({ type: 'click' })} >
                 <Piece piece = {props.piece} position = {state.dragging ? { x: context.mouseX, y: context.mouseY } : null} />
             </div>
