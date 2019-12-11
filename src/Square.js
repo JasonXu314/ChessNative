@@ -9,8 +9,10 @@ const reducer = (state, action) => {
     switch (action.type)
     {
         case ('dragging'):
+            console.log('dragging');
             return { ...state, dragging: true };
         case ('undragging'):
+            console.log('undragging');
             return { ...state, dragging: false };
         case ('click'):
             return { ...state, clicked: !state.clicked };
@@ -33,7 +35,7 @@ const Square = (props) => {
     {
         return (
             <div className = "square" style = {{ top: parseInt(props.y) * 68, left: parseInt(props.x) * 68, backgroundColor: state.clicked ? '#408f32' : null }}
-                onMouseDown = {() => dispatch({ type: 'dragging' })} onClick = {() => dispatch({ type: 'click' })} >
+                onMouseDown = {() => dispatch({ type: 'dragging' })} onMouseUp = {() => dispatch({ type: 'undragging' })} onClick = {() => dispatch({ type: 'click' })} >
                 <Piece piece = {props.piece} position = {state.dragging ? { x: context.mouseX, y: context.mouseY } : null} />
             </div>
         );
