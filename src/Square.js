@@ -9,10 +9,10 @@ const reducer = (state, action) => {
     switch (action.type)
     {
         case ('dragging'):
-            console.log('dragging');
+            // console.log('dragging');
             return { ...state, dragging: true };
         case ('undragging'):
-            console.log('undragging');
+            // console.log('undragging');
             return { ...state, dragging: false };
         case ('click'):
             return { ...state, clicked: !state.clicked };
@@ -22,7 +22,14 @@ const reducer = (state, action) => {
 };
 
 const Square = (props) => {
-    const [state, dispatch] = useReducer(reducer, { clicked: false, dragging: false, x: null, y: null, piece: props.piece.slice(0, 1), color: props.piece.slice(1, 2) });
+    const [state, dispatch] = useReducer(reducer, {
+            clicked: false,
+            dragging: false,
+            x: null,
+            y: null,
+            piece: props.piece.slice(0, 1),
+            color: props.piece.slice(1, 2)
+        });
     const context = useContext(DragContext);
 
     if (props.piece === '')
@@ -34,8 +41,19 @@ const Square = (props) => {
     else
     {
         return (
-            <div className = "square" style = {{ top: parseInt(props.y) * 64, left: parseInt(props.x) * 64, backgroundColor: state.clicked ? '#408f32' : null }}
-                onMouseDown = {() => dispatch({ type: 'dragging' })} onMouseUp = {() => dispatch({ type: 'undragging' })} onClick = {() => dispatch({ type: 'click' })} >
+            <div className = "square" style = {{
+                    top: parseInt(props.y) * 64,
+                    left: parseInt(props.x) * 64,
+                    backgroundColor: context.selectedSquare[0] === props.x && context.selectedSquare[1] === props.y
+                        ? 'rgba(64, 143, 50, 0.6)' : null,
+                }}
+                onMouseDown = {() => dispatch({ type: 'dragging' })} onMouseUp = {() => dispatch({ type: 'undragging' })}
+                onClick = {() => dispatch({ type: 'click' }) & props.dispatch(
+                    {
+                        type: context.selectedSquare[0] === props.x && context.selectedSquare[1] ? 'unselected' : 'selected',
+                        x: props.x,
+                        y: props.y
+                    })} >
                 <Piece piece = {props.piece} position = {state.dragging ? { x: context.mouseX, y: context.mouseY } : null} />
             </div>
         );

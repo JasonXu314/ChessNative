@@ -1,5 +1,7 @@
 import React from 'react';
 
+import './Piece.css';
+
 import Kw from './resources/Kw.png';
 import Kb from './resources/Kb.png';
 import Qw from './resources/Qw.png';
@@ -21,8 +23,8 @@ const Piece = (props) => {
     else
     {
         return (
-            <img alt = "Error" src = {pieceDict[props.piece]} onMouseUp = {(evt) => console.log(evt.target)} draggable = {false}
-                style = {props.position ? { position: 'fixed', left: props.position.x, top: props.position.y } : null} />
+            <img className = "piece" alt = "Error" src = {pieceDict[props.piece]} onMouseUp = {() => {}} draggable = {false}
+                style = {props.position ? { position: 'fixed', left: props.position.x - 30, top: props.position.y - 30 } : null} />
         );
     }
 };
