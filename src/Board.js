@@ -7,16 +7,15 @@ import Square from './Square';
 import GlobalContext from './index';
 
 const Board = () => {
-    const [state, dispatch] = useReducer(reducer,
-        {
-            dragging: false,
-            dragStartX: null,
-            dragStartY: null,
-            mouseX: null,
-            mouseY: null,
-            originSquare: [null, null],
-            selectedSquare: [null, null]
-        });
+    const [state, dispatch] = useReducer(reducer,{
+        dragging: false,
+        dragStartX: null,
+        dragStartY: null,
+        mouseX: null,
+        mouseY: null,
+        originSquare: [null, null],
+        selectedSquare: [null, null]
+    });
     const context = useContext(GlobalContext);
 
     return (
@@ -25,7 +24,8 @@ const Board = () => {
                 onMouseDown = {() => dispatch({ type: 'dragging' })} onMouseUp = {() => dispatch({ type: 'undragging' })} >
                 {context.board.map((arr, i) => (
                     <span className = "row" key = {i}>
-                        {arr.map((val, j) => <Square dispatch = {dispatch} key = {`${i} ${j}`} x = {j} y = {i} piece = {val} color = {i % 2 === 0 ? j % 2 === 0 ? 'white' : 'black' : j % 2 === 0 ? 'black' : 'white'} />)}
+                        {arr.map((val, j) => <Square dispatch = {dispatch} key = {`${i} ${j}`} x = {j} y = {i} piece = {val}
+                                                color = {i % 2 === 0 ? j % 2 === 0 ? 'white' : 'black' : j % 2 === 0 ? 'black' : 'white'} />)}
                     </span>
                 ))}
             </div>

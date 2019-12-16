@@ -35,7 +35,11 @@ const Square = (props) => {
     if (props.piece === '')
     {
         return (
-            <div className = "square" style = {{ top: parseInt(props.y) * 64, left: parseInt(props.x) * 64 }} />
+            <div className = "square" style = {{
+                top: parseInt(props.y) * 64,
+                left: parseInt(props.x) * 64,
+                backgroundColor: props.color === 'white' ? 'burlywood' : 'peru'
+            }} onClick = {() => props.dispatch({ type: 'selected', x: props.x, y: props.y })} />
         );
     }
     else
@@ -45,15 +49,14 @@ const Square = (props) => {
                     top: parseInt(props.y) * 64,
                     left: parseInt(props.x) * 64,
                     backgroundColor: context.selectedSquare[0] === props.x && context.selectedSquare[1] === props.y
-                        ? 'rgba(64, 143, 50, 0.6)' : null,
+                        ? 'rgba(64, 143, 50, 0.6)' : props.color === 'white' ? 'burlywood' : 'peru',
                 }}
                 onMouseDown = {() => dispatch({ type: 'dragging' })} onMouseUp = {() => dispatch({ type: 'undragging' })}
-                onClick = {() => dispatch({ type: 'click' }) & props.dispatch(
-                    {
-                        type: context.selectedSquare[0] === props.x && context.selectedSquare[1] ? 'unselected' : 'selected',
-                        x: props.x,
-                        y: props.y
-                    })} >
+                onClick = {() => dispatch({ type: 'click' }) & props.dispatch({
+                    type: context.selectedSquare[0] === props.x && context.selectedSquare[1] ? 'unselected' : 'selected',
+                    x: props.x,
+                    y: props.y
+                })} >
                 <Piece piece = {props.piece} position = {state.dragging ? { x: context.mouseX, y: context.mouseY } : null} />
             </div>
         );
