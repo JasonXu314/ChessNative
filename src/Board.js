@@ -7,14 +7,15 @@ import Square from './Square';
 import GlobalContext from './index';
 
 const Board = () => {
-    const [state, dispatch] = useReducer(reducer,{
+    const [state, dispatch] = useReducer(reducer, {
         dragging: false,
         dragStartX: null,
         dragStartY: null,
         mouseX: null,
         mouseY: null,
-        originSquare: [null, null],
-        selectedSquare: [null, null]
+        hoverSquare: { x: null, y: null },
+        originSquare: { x: null, y: null},
+        selectedSquare: { x: null, y: null }
     });
     const context = useContext(GlobalContext);
 
@@ -39,8 +40,8 @@ const reducer = (state, action) => {
     switch (action.type)
     {
         case ('mousemove'):
-            // console.log(action.x, action.y);
-            return { ...state, mouseX: action.x, mouseY: action.y };
+            // console.log({ x: Math.floor((action.x - 4)/64), y: Math.floor((action.y - 4)/64) });
+            return { ...state, mouseX: action.x, mouseY: action.y, hoverSquare: { x: Math.floor((action.x - 4)/64), y: Math.floor((action.y - 4)/64) } };
         case ('dragging'):
             // console.log(Math.floor((state.mouseX - 4)/64), Math.floor((state.mouseY - 4)/64));
             // console.log(state.mouseX, state.mouseY);
@@ -49,7 +50,7 @@ const reducer = (state, action) => {
                 dragging: true,
                 dragStartX: state.mouseX,
                 dragStartY: state.mouseY,
-                originSquare: [Math.floor((state.mouseX - 4)/64), Math.floor((state.mouseY - 4)/64)]
+                originSquare: { x: Math.floor((state.mouseX - 4)/64), y: Math.floor((state.mouseY - 4)/64) }
             };
         case ('undragging'):
             // console.log(Math.floor((state.mouseX - 4)/64), Math.floor((state.mouseY - 4)/64));
@@ -57,17 +58,24 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 dragging: false,
-                endingSquare: [Math.floor((state.mouseX - 4)/64), Math.floor((state.mouseY - 4)/64)]
+                endingSquare: { x: Math.floor((state.mouseX - 4)/64), y: Math.floor((state.mouseY - 4)/64) }
             };
         case ('selected'):
             return {
                 ...state,
-                selectedSquare: [action.x, action.y]
+                selectedSquare: { x: action.x, y: action.y }
             };
         case ('unselected'):
             return {
                 ...state,
-                selectedSquare: [null, null]
+                selectedSquare: { x: null, y: null }
+            };
+        case ('move'):
+            console.log(GlobalContext);
+            return {
+                ...state,
+                // To-do: move api
+                
             };
         default:
             return state;

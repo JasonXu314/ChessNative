@@ -24,7 +24,7 @@ const Piece = (props) => {
     {
         return (
             <img className = "piece" alt = "Error" src = {pieceDict[props.piece]} onMouseUp = {() => {}} draggable = {false}
-                style = {props.position ? { position: 'fixed', left: props.position.x - 30, top: props.position.y - 30 } : null} />
+                style = {props.position ? { position: 'fixed', left: props.position.x - 30, top: props.position.y - 30, zIndex: 11 } : null} />
         );
     }
 };

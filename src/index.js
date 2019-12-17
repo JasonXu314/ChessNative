@@ -7,10 +7,11 @@ const GlobalContext = React.createContext();
 export default GlobalContext;
 
 const reducer = (state, action) => {
+    let board;
     switch (action.type)
     {
         case ('init'):
-            const board = [['Rb', 'Nb', 'Bb', 'Qb', 'Kb', 'Bb', 'Nb', 'Rb'],
+            board = [['Rb', 'Nb', 'Bb', 'Qb', 'Kb', 'Bb', 'Nb', 'Rb'],
                             ['pb', 'pb', 'pb', 'pb', 'pb', 'pb', 'pb', 'pb'],
                             ['', '', '', '', '', '', '', '', ],
                             ['', '', '', '', '', '', '', '', ],
@@ -20,7 +21,9 @@ const reducer = (state, action) => {
                             ['Rw', 'Nw', 'Bw', 'Qw', 'Kw', 'Bw', 'Nw', 'Rw']];
             return { ...state, board };
         case ('move'):
-            return {};
+            board = state.board;
+            board[action.move.y][action.move.x] = action.move.piece;
+            return { ...state, board }
         default:
             return state;
     }
