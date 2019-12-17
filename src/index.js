@@ -22,8 +22,13 @@ const reducer = (state, action) => {
             return { ...state, board };
         case ('move'):
             board = state.board;
-            board[action.move.y][action.move.x] = action.move.piece;
-            return { ...state, board }
+            if (state.colorMove === action.move.piece.slice(1))
+            {
+                board[action.move.endY][action.move.endX] = action.move.piece;
+                board[action.move.startY][action.move.startX] = '';
+                return { ...state, board };
+            }
+            return state;
         default:
             return state;
     }
@@ -32,6 +37,7 @@ const reducer = (state, action) => {
 const Context = (props) => {
     const [state, dispatch] = useReducer(reducer, {
         board: [],
+        colorMove: 'w',
         postMove: (move) => {
             dispatch({ type: 'move', move });
         }

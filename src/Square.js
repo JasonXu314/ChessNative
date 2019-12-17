@@ -66,6 +66,7 @@ const Square = (props) => {
                             type: 'move',
                             startX: props.x,
                             startY: props.y,
+                            piece: props.piece
                         });
                     }
                 }} >

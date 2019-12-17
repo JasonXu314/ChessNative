@@ -7,6 +7,59 @@ import Square from './Square';
 import GlobalContext from './index';
 
 const Board = () => {
+    const context = useContext(GlobalContext);
+
+    const reducer = (state, action) => {
+        switch (action.type)
+        {
+            case ('mousemove'):
+                // console.log({ x: Math.floor((action.x - 4)/64), y: Math.floor((action.y - 4)/64) });
+                return { ...state, mouseX: action.x, mouseY: action.y, hoverSquare: { x: Math.floor((action.x - 4)/64), y: Math.floor((action.y - 4)/64) } };
+            case ('dragging'):
+                // console.log(Math.floor((state.mouseX - 4)/64), Math.floor((state.mouseY - 4)/64));
+                // console.log(state.mouseX, state.mouseY);
+                return {
+                    ...state,
+                    dragging: true,
+                    dragStartX: state.mouseX,
+                    dragStartY: state.mouseY,
+                    originSquare: { x: Math.floor((state.mouseX - 4)/64), y: Math.floor((state.mouseY - 4)/64) }
+                };
+            case ('undragging'):
+                // console.log(Math.floor((state.mouseX - 4)/64), Math.floor((state.mouseY - 4)/64));
+                // console.log('undragging');
+                return {
+                    ...state,
+                    dragging: false,
+                    endingSquare: { x: Math.floor((state.mouseX - 4)/64), y: Math.floor((state.mouseY - 4)/64) }
+                };
+            case ('selected'):
+                return {
+                    ...state,
+                    selectedSquare: { x: action.x, y: action.y }
+                };
+            case ('unselected'):
+                return {
+                    ...state,
+                    selectedSquare: { x: null, y: null }
+                };
+            case ('move'):
+                context.postMove({
+                    startX: action.startX,
+                    startY: action.startY,
+                    endX: state.hoverSquare.x,
+                    endY: state.hoverSquare.y,
+                    piece: action.piece
+                });
+                return {
+                    ...state,
+                    selectedSquare: { x: null, y: null }
+                };
+            default:
+                return state;
+        }
+    };
+
     const [state, dispatch] = useReducer(reducer, {
         dragging: false,
         dragStartX: null,
@@ -17,7 +70,6 @@ const Board = () => {
         originSquare: { x: null, y: null},
         selectedSquare: { x: null, y: null }
     });
-    const context = useContext(GlobalContext);
 
     return (
         <DragContext.Provider value = {state}>
@@ -35,51 +87,5 @@ const Board = () => {
 };
 
 export default Board;
-
-const reducer = (state, action) => {
-    switch (action.type)
-    {
-        case ('mousemove'):
-            // console.log({ x: Math.floor((action.x - 4)/64), y: Math.floor((action.y - 4)/64) });
-            return { ...state, mouseX: action.x, mouseY: action.y, hoverSquare: { x: Math.floor((action.x - 4)/64), y: Math.floor((action.y - 4)/64) } };
-        case ('dragging'):
-            // console.log(Math.floor((state.mouseX - 4)/64), Math.floor((state.mouseY - 4)/64));
-            // console.log(state.mouseX, state.mouseY);
-            return {
-                ...state,
-                dragging: true,
-                dragStartX: state.mouseX,
-                dragStartY: state.mouseY,
-                originSquare: { x: Math.floor((state.mouseX - 4)/64), y: Math.floor((state.mouseY - 4)/64) }
-            };
-        case ('undragging'):
-            // console.log(Math.floor((state.mouseX - 4)/64), Math.floor((state.mouseY - 4)/64));
-            // console.log('undragging');
-            return {
-                ...state,
-                dragging: false,
-                endingSquare: { x: Math.floor((state.mouseX - 4)/64), y: Math.floor((state.mouseY - 4)/64) }
-            };
-        case ('selected'):
-            return {
-                ...state,
-                selectedSquare: { x: action.x, y: action.y }
-            };
-        case ('unselected'):
-            return {
-                ...state,
-                selectedSquare: { x: null, y: null }
-            };
-        case ('move'):
-            console.log(GlobalContext);
-            return {
-                ...state,
-                // To-do: move api
-                
-            };
-        default:
-            return state;
-    }
-};
 
 export const DragContext = React.createContext();
