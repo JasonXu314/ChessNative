@@ -26,7 +26,7 @@ const reducer = (state, action) => {
             {
                 board[action.move.endY][action.move.endX] = action.move.piece;
                 board[action.move.startY][action.move.startX] = '';
-                return { ...state, board };
+                return { ...state, colorMove: state.colorMove === 'w' ? 'b' : 'w', board };
             }
             return state;
         default:
