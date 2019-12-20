@@ -2,6 +2,7 @@ import React, { useReducer, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+import check from './moveChecker';
 
 const GlobalContext = React.createContext();
 export default GlobalContext;
@@ -12,17 +13,17 @@ const reducer = (state, action) => {
     {
         case ('init'):
             board = [['Rb', 'Nb', 'Bb', 'Qb', 'Kb', 'Bb', 'Nb', 'Rb'],
-                            ['pb', 'pb', 'pb', 'pb', 'pb', 'pb', 'pb', 'pb'],
-                            ['', '', '', '', '', '', '', '', ],
-                            ['', '', '', '', '', '', '', '', ],
-                            ['', '', '', '', '', '', '', '', ],
-                            ['', '', '', '', '', '', '', '', ],
-                            ['pw', 'pw', 'pw', 'pw', 'pw', 'pw', 'pw', 'pw'],
-                            ['Rw', 'Nw', 'Bw', 'Qw', 'Kw', 'Bw', 'Nw', 'Rw']];
+                        ['pb', 'pb', 'pb', 'pb', 'pb', 'pb', 'pb', 'pb'],
+                        ['', '', '', '', '', '', '', '', ],
+                        ['', '', '', '', '', '', '', '', ],
+                        ['', '', '', '', '', '', '', '', ],
+                        ['', '', '', '', '', '', '', '', ],
+                        ['pw', 'pw', 'pw', 'pw', 'pw', 'pw', 'pw', 'pw'],
+                        ['Rw', 'Nw', 'Bw', 'Qw', 'Kw', 'Bw', 'Nw', 'Rw']];
             return { ...state, board };
         case ('move'):
             board = state.board;
-            if (state.colorMove === action.move.piece.slice(1))
+            if (state.colorMove === action.move.piece.slice(1) && check(action.move, board))
             {
                 board[action.move.endY][action.move.endX] = action.move.piece;
                 board[action.move.startY][action.move.startX] = '';
@@ -39,6 +40,7 @@ const Context = (props) => {
         board: [],
         colorMove: 'w',
         postMove: (move) => {
+            // console.log(state.board);
             dispatch({ type: 'move', move });
         }
     });
