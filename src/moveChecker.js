@@ -28,7 +28,6 @@ const check = (move, board) => {
     });
     if (king.x === null || king.y === null) { throw new Error('null King!'); }
 
-    console.log(control);
     return !control[king.y][king.x] && canHypoMove(move.piece, board, {
         startX: move.startX,
         startY: move.startY,
@@ -155,7 +154,7 @@ function canHypoMove(piece, board, move)
             }
         case ('B'):
             if (Math.abs(move.startX - move.endX) !== Math.abs(move.startY - move.endY) ||
-                    board[move.endY][move.endX] !== '' || board[move.endY][move.endX].slice(1) === piece.slice(1))
+                    (board[move.endY][move.endX] !== '' && board[move.endY][move.endX].slice(1) === piece.slice(1)))
             {
                 return false;
             }
@@ -207,8 +206,33 @@ function canHypoMove(piece, board, move)
         case ('Q'):
             return canHypoMove('R', board, move) || canHypoMove('B', board, move);
         case ('K'):
+            if (board[move.endY][move.endX] === '' || board[move.endY][move.endX].slice(1) !== piece.slice(1))
+            {
+                return Math.abs(move.startX - move.endX) <= 1 && Math.abs(move.startY - move.endY) <= 1;
+            }
             return false;
         case ('p'):
+            if (move.startY === (piece.slice(1) === 'w' ? 6 : 1))
+            {
+                if (move.endX === move.startX)
+                {
+                    return (piece.slice(1) === 'w' ? move.startY - move.endY <= 2  && move.startY - move.endY > 0
+                            : move.endY - move.startY <= 2 && move.endY - move.startY > 0) &&  board[move.endY][move.endX] === '';
+                }
+            }
+            else
+            {
+                if (move.endX === move.startX)
+                {
+                    return (piece.slice(1) === 'w' ? move.startY - move.endY === 1 : move.endY - move.startY === 1) && board[move.endY][move.endX] === '';
+                }
+
+            }
+            if (Math.abs(move.startX - move.endX) <= 1)
+            {
+                return (piece.slice(1) === 'w' ? move.startY - move.endY === 1 : move.endY - move.startY === 1) &&
+                        (board[move.endY][move.endX] !== '' && board[move.endY][move.endX].slice(1) !== piece.slice(1));
+            }
             return false;
         default:
             throw new Error(`Piece Error Occured: ${piece}`);

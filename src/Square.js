@@ -21,6 +21,10 @@ const reducer = (state, action) => {
     }
 };
 
+/**
+ * Square on the chess board
+ * @param {{ x: number, y: number, piece: string, color: string, dispatch: React.Dispatch<A> }} props the props
+ */
 const Square = (props) => {
     const [state, dispatch] = useReducer(reducer, {
             clicked: false,

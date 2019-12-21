@@ -23,7 +23,7 @@ const Piece = (props) => {
     else
     {
         return (
-            <img className = "piece" alt = "Error" src = {pieceDict[props.piece]} onMouseUp = {() => {}} draggable = {false}
+            <img className = "piece" alt = "Error" src = {pieceDict[props.piece]} draggable = {false}
                 style = {props.position ? { position: 'fixed', left: props.position.x - 30, top: props.position.y - 30, zIndex: 11 } : null} />
         );
     }

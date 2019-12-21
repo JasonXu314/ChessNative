@@ -1,0 +1,8 @@
+version: 0.1.0
+files:
+  - url: chess-app-Setup-0.1.0.exe
+    sha512: 7lgqZfHzkcDlFVVBKKWV17fjblobpfQqvqkQCEAWlB6JKzMZhj4znS7VYI6Qsu3bH7vIKfXR5joXi6Ny4pK7Jw==
+    size: 58823455
+path: chess-app-Setup-0.1.0.exe
+sha512: 7lgqZfHzkcDlFVVBKKWV17fjblobpfQqvqkQCEAWlB6JKzMZhj4znS7VYI6Qsu3bH7vIKfXR5joXi6Ny4pK7Jw==
+releaseDate: '2019-12-21T09:33:13.664Z'
